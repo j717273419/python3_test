@@ -1,3 +1,4 @@
+#At first ,use pip install pypyodbc make sure you have the package in you environment
 import pypyodbc
 
 # python3使用pypyodbc读取sql server 2012的数据
