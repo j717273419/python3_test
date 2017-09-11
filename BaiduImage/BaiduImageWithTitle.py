@@ -17,7 +17,7 @@ urls = re.findall(r'("objURL":".*?) "fromPageTitle":"(.*?)"',str(obj))
 for picAddress in urls:
     if randomBeginIndex < 50:
         print("开始从第 %d 张图片下载" % randomBeginIndex)
-        randomSleepSeconds = random.randint(3, 10)
+        randomSleepSeconds = random.randint(3, 7)
         print("休息 %d 秒，不要被网站捉到喔！" % randomSleepSeconds)
         time.sleep(randomSleepSeconds)
         try:
