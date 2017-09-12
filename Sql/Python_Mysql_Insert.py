@@ -6,14 +6,8 @@ import pymysql
 conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='123456', db='news')
 
 cur = conn.cursor()
-sql_text = "Insert Into news_cnbeta(id,news_title,news_content) values()"
-cur.execute("Insert Into ")
-
-print(cur.description)
-print()
-
-for row in cur:
-    print(row)
+sql_text = "Insert Into news_cnbeta(news_title,news_content) values('{title}','{content}')".format(title="apple",content="iphone8")
+cur.execute(sql_text)
 
 cur.close()
 conn.close()

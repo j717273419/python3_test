@@ -15,6 +15,6 @@ print(("{0},{1},{0}").format("haha","me"))
 
 
 #python3中字符串使用占位符别名和大括号
-print(("{a},{b},{a}").format(a="hahaaaa",b="mebbbb"))
+print("{a},{b},{a}".format(a="hahaaaa",b="mebbbb"))
 
 
