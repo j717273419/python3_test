@@ -35,9 +35,10 @@ def detect(html_doc):
     print("body:",html_soup.body.name)
     print("body:",(html_soup.body.findAll("div",{"class","list"})))
     title_list = html_soup.body.findAll("div",{"class","list"})
+    host = "http://m.cnbeta.com"
     for row in title_list:
         print("row.title:",row.a.string)
-        print("row.link:",row.a["href"])
+        print("row.link:",host + row.a["href"])
 
 
 def main():
