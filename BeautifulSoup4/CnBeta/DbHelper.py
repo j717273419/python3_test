@@ -33,17 +33,23 @@ class DbHelper:
 
     #插入新闻
     def insert(self,news_title,news_url,news_content=""):
-        if(self.articleIsExists(news_url)):
-            return "已经添加过此记录"
-        else:
-            self.insert2mysql(news_title, news_url,news_content)
-            return "添加成功"
+        try:
+            if(self.articleIsExists(news_url)):
+                return "已经添加过此记录"
+            else:
+                self.insert2mysql(news_title, news_url,news_content)
+                return "添加成功"
+        except:
+                return "出现异常"
+        finally:
+                # 关闭sql连接
+                self.cur.close()
+                self.conn.close()
 
-    if __name__ == '__main__':
-        #result = insert("测试插入", "http://www.jb51.net/article/63833.htm", "content")
-        result = articleIsExists(news_url='haha')
-        print(result)
+if __name__ == '__main__':
+    #result = insert("测试插入", "http://www.jb51.net/article/63833.htm", "content")
+    obj = DbHelper()
+    result = obj.articleIsExists(news_url='haha')
+    print(result)
 
-    #关闭sql连接
-    cur.close()
-    conn.close()
+
