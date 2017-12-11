@@ -47,9 +47,9 @@ class DbHelper:
                 self.conn.close()
 
 if __name__ == '__main__':
-    #result = insert("测试插入", "http://www.jb51.net/article/63833.htm", "content")
     obj = DbHelper()
-    result = obj.articleIsExists(news_url='haha')
+    # result = obj.articleIsExists(news_url='haha')
+    result = obj.insert("测试插入", "http://www.jb51.net/article/63833.htm", "content")
     print(result)
 
 
