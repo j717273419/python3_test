@@ -8,3 +8,7 @@ tuple2 = ('elephant','monkey',tuple)
 print(len(tuple2))
 print("the right value is 4,and the answer is ",tuple2[2][3])
 
+
+tuple3 = (1,2,3)
+tuple3[2] = 20
+print(tuple3)

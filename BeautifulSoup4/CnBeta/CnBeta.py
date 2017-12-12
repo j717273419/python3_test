@@ -31,14 +31,19 @@ class CnBeta:
         # print("body:", html_soup.body.name)
         # print("body:", (html_soup.body.findAll("div", {"class", "list"})))
         title_list = html_soup.body.findAll("div", {"class", "list"})
+        return_list = []
         for row in title_list:
-            print("row.title:", row.a.string)
-            print("row.link:", self.HOST + row.a["href"])
+            # print("row.title:", row.a.string)
+            # print("row.link:", self.HOST + row.a["href"])
+            return_tuple = (row.a.string,self.HOST + row.a["href"])
+            return_list.append(return_tuple)
+        return return_list
 
     def main(self):
         url = self.HOST + "/wap"
         html_doc = self.get(url)
-        self.detect(html_doc)
+        result = self.detect(html_doc)
+        print(result)
 
 if __name__ == "__main__":
     obj = CnBeta();
