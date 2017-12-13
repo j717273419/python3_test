@@ -41,10 +41,17 @@ class DbHelper:
                 return "添加成功"
         except:
                 return "出现异常"
+
+
+    def batch_insert(self,list):
+        try:
+            for item in list:
+                self.insert(item[0],item[1])
+
         finally:
-                # 关闭sql连接
-                self.cur.close()
-                self.conn.close()
+            # 关闭sql连接
+            self.cur.close()
+            self.conn.close()
 
 if __name__ == '__main__':
     obj = DbHelper()

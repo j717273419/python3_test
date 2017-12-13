@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 class CnBeta:
     DEFAULT_HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"}
-    DEFAULT_TIMEOUT = 70
+    DEFAULT_TIMEOUT = 10
     HOST = "http://m.cnbeta.com"
 
     def get(self,url):
@@ -43,11 +43,11 @@ class CnBeta:
         url = self.HOST + "/wap"
         html_doc = self.get(url)
         result = self.detect(html_doc)
-        print(result)
+        return result
 
 if __name__ == "__main__":
-    obj = CnBeta();
-    obj.main();
+    obj = CnBeta()
+    print(obj.main())
 
 
 
