@@ -3,7 +3,7 @@
 # 要先通过pip安装python连接mysql的库，pip install PyMysql
 import pymysql
 
-conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='123456', db='mysql')
+conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='1234', db='mysql')
 
 cur = conn.cursor()
 cur.execute("SELECT * FROM user ")

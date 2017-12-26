@@ -9,10 +9,10 @@ import pymysql
 class DbHelper:
     # 解决python使用pymysql往mysql数据库插入中文时报错的问题
     # 在连接时，指明编码参数charset='utf8'
-    conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='123456', db='news',charset='utf8')
+    conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='1234', db='news',charset='utf8')
     cur = conn.cursor()
-    #检测是否已经存在记录
-    def articleIsExists(self,news_url):
+    # 检测是否已经存在记录
+    def articleIsExists(self,news_url) :
         sql_text_check = "select news_title from news_cnbeta where news_url = '{url}'".format(url=news_url)
         #执行sql
         self.cur.execute(sql_text_check)

@@ -13,3 +13,37 @@ __version__ = "0.1"
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from datetime import datetime
+import random
+
+
+# 输出时间
+def job_print(date_time):
+    print("execute function : job_print")
+    print(date_time)
+    print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+
+# 根据随机数生成时间
+def job_random_time():
+    hour = random.randint(0, 23)
+    minute = random.randint(0, 59)
+    second = random.randint(0, 59)
+    time = "{hour}:{minute}:{second}".format(hour=hour, minute=minute, second=second)
+    date = datetime.now().strftime("%Y-%m-%d")
+    dt = date + " " + time
+    return dt
+
+
+def job_once():
+    print("execute job : job_once")
+    # 定义BlockingScheduler
+    sched_once = BlockingScheduler()
+    date_time = job_random_time()
+    sched_once.add_job(job_print, 'date', run_date=date_time, args=[date_time])
+    sched_once.start()
+
+
+# 定义BlockingScheduler
+sched = BlockingScheduler()
+sched.add_job(job_once, 'interval', seconds=3)
+sched.start()
