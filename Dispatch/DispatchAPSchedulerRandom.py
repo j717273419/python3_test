@@ -4,7 +4,7 @@ __date__ = "2017-12-26"
 __version__ = "0.1"
 
 '''
-功能：实现在一周内随机的某些天，随机一个时间来执行任务
+功能：实现每天在一个随机时间来执行任务
 思路1：设置一个数值区间，随机取一个值。eg.[1-7],
 然后根据apscheduler的一次性任务和循环任务，利用循环任务创建一次性任务，
 来实现随机时间启动任务
@@ -35,16 +35,14 @@ def job_random_time():
     return dt
 
 
-def job_once():
+def job_once(sched):
     print("execute job : job_once")
-    # 定义BlockingScheduler
-    sched_once = BlockingScheduler()
     date_time = job_random_time()
-    sched_once.add_job(job_print, 'date', run_date=date_time, args=[date_time])
-    sched_once.start()
-
+    print(date_time)
+    sched.add_job(job_print, 'date', run_date=date_time, args=[date_time])
+    print(sched.print_jobs())
 
 # 定义BlockingScheduler
 sched = BlockingScheduler()
-sched.add_job(job_print, 'interval', seconds=3, args=[job_random_time()])
+sched.add_job(job_once, 'interval', days=1, args=[sched])
 sched.start()
