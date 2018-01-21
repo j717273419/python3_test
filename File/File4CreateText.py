@@ -16,7 +16,7 @@ for a in range(0,10):
 f.close()
 
 
-#python3创建文件,写入的内容换行
+# python3创建文件,写入的内容换行
 cwd = os.getcwd()
 file_name = cwd + "\\test2.txt"
 f = open(file_name,"wt")
