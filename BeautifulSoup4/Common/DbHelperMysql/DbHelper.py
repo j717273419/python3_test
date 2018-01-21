@@ -13,7 +13,7 @@ class DbHelper:
     cur = conn.cursor()
     # 检测是否已经存在记录
     def articleIsExists(self,news_url) :
-        sql_text_check = "select news_title from news_cnbeta where news_url = '{url}'".format(url=news_url)
+        sql_text_check = "select news_title from cnbeta where news_url = '{url}'".format(url=news_url)
         #执行sql
         self.cur.execute(sql_text_check)
         self.conn.commit()
@@ -23,13 +23,14 @@ class DbHelper:
 
     #插入到数据库
     def insert2mysql(self,news_title,news_url,news_content=""):
-        sql_text_insert = "Insert Into news_cnbeta(news_title,news_url,news_content) values('{title}','{url}','{content}')".format(
+        sql_text_insert = "Insert Into cnbeta(news_title,news_url,news_content) values('{title}','{url}','{content}')".format(
                         title=news_title,
                         url=news_url,
                         content=news_content)
         #执行sql
         self.cur.execute(sql_text_insert)
         self.conn.commit()
+
 
     #插入新闻
     def insert(self,news_title,news_url,news_content=""):
@@ -42,16 +43,15 @@ class DbHelper:
         except:
                 return "出现异常"
 
-
-    def batch_insert(self,list):
+    def batch_insert(self, list):
         try:
             for item in list:
-                self.insert(item[0],item[1])
-
+                self.insert(item[0], item[1])
         finally:
             # 关闭sql连接
             self.cur.close()
             self.conn.close()
+
 
 if __name__ == '__main__':
     obj = DbHelper()

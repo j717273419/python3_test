@@ -12,7 +12,7 @@ __version__ = "0.1"
 '''
 
 from apscheduler.schedulers.blocking import BlockingScheduler
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
 import random
 
 
@@ -35,14 +35,15 @@ def job_random_time():
     return dt
 
 
-def job_once(sched):
+def job_once(scheduler):
     print("execute job : job_once")
     date_time = job_random_time()
     print(date_time)
-    sched.add_job(job_print, 'date', run_date=date_time, args=[date_time])
-    print(sched.print_jobs())
+    scheduler.add_job(job_print, 'date', run_date=date_time, args=[date_time])
+    print(scheduler.print_jobs())
+
 
 # 定义BlockingScheduler
-sched = BlockingScheduler()
-sched.add_job(job_once, 'interval', days=1, args=[sched])
-sched.start()
+blockingScheduler = BlockingScheduler()
+blockingScheduler.add_job(job_once, 'interval', seconds=2, args=[blockingScheduler])
+blockingScheduler.start()

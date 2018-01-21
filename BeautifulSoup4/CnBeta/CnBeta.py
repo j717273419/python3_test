@@ -6,7 +6,7 @@ from urllib import request
 from urllib import parse
 from bs4 import BeautifulSoup
 
-class CnBeta:
+class CnBetaParse:
     DEFAULT_HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"}
     DEFAULT_TIMEOUT = 10
     HOST = "http://m.cnbeta.com"
@@ -45,8 +45,9 @@ class CnBeta:
         result = self.detect(html_doc)
         return result
 
+
 if __name__ == "__main__":
-    obj = CnBeta()
+    obj = CnBetaParse()
     print(obj.main())
 
 
