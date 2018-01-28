@@ -25,6 +25,8 @@ print(sched.get_job('test_job1111'))
 print(type(sched.get_job('test_job1111')))
 if sched.get_job('test_job1111') is None:
     print("haha")
+if sched.get_job('test_job2') is not None:
+    print("lala")
 sched.start()
 print('hi')
 # sched.modify_job('test_job1', seconds=6)
