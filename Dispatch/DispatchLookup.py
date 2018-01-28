@@ -19,13 +19,16 @@ def job():
 # 定义BlockingScheduler
 sched = BlockingScheduler()
 sched.add_job(job, 'interval', seconds=3, id='test_job1')
-sched.add_job(job, 'interval', seconds=5, id='test_job2')
+sched.add_job(job, 'interval', seconds=50, id='test_job2')
 print(sched.get_job('test_job1'))
 print(sched.get_job('test_job1111'))
 print(type(sched.get_job('test_job1111')))
 if sched.get_job('test_job1111') is None:
     print("haha")
 if sched.get_job('test_job2') is not None:
+    print("lala")
+    # apscheduler 让job立即运行
+    sched.get_job('test_job2').func()
     print("lala")
 sched.start()
 print('hi')
