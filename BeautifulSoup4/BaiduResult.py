@@ -32,7 +32,9 @@ def post(url, **paras):
 def detect(html_doc):
     html_soup = BeautifulSoup(html_doc, "html.parser")
     #anchors = html_soup.select('result c-container ')
-    result = html_soup.select('#1')
+    # result = html_soup.select('#1')
+    # result = html_soup.select('[id="1"]')
+    result = html_soup.find("div", {"id": "1"})
     print(result)
     title = html_soup.select('html head title')
     # select返回的结果是一个list，所以获取结果要遍历
