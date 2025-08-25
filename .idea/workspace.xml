@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="036d79b3-5913-4f9e-b39c-db8d9b3d846d" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Image/py-image-demo-new.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Image/py-image-demo-numpy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Image/py-image.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/String/str-padding-fill.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI/PySide/pyside-calc.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI/PySide/pyside-calc2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI/PySide/pyside-calc3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI/PySide/pyside6-demo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,9 +26,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="31aMRQlsmNNNruUfrGIeBgEQzBl" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -44,8 +44,13 @@
     "Python.py-image-demo-new.executor": "Run",
     "Python.py-image-demo-numpy.executor": "Run",
     "Python.py-image.executor": "Run",
+    "Python.pyside-calc.executor": "Run",
+    "Python.pyside-calc2.executor": "Run",
+    "Python.pyside-calc3.executor": "Run",
+    "Python.pyside6-demo.executor": "Run",
     "Python.str-padding-fill.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true"
@@ -54,7 +59,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-b3ae9b5d7125-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.439" />
+        <option value="bundled-python-sdk-7e47963ff851-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.515" />
       </set>
     </attachedChunks>
   </component>
@@ -80,6 +85,11 @@
           <url>file://$PROJECT_DIR$/Image/py-image-demo-numpy.py</url>
           <line>66</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/UI/PySide/pyside-calc3.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
