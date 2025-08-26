@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="036d79b3-5913-4f9e-b39c-db8d9b3d846d" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/UI/PySide/pyside-calc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI/PySide/pyside-calc2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI/PySide/pyside-calc3.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UI/PySide/pyside6-demo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/PySide/pyside-calc3.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/PySide/pyside-calc3.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +85,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/UI/PySide/pyside-calc3.py</url>
-          <line>17</line>
+          <line>19</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

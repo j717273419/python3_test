@@ -1,10 +1,12 @@
+import os
 import sys
 from enum import Enum
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                                QHBoxLayout, QGridLayout, QPushButton, QLineEdit,
-                               QSizePolicy, QMenuBar, QLabel)
-from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, Signal
-from PySide6.QtGui import QFont, QAction
+                               QSizePolicy, QMenuBar, QLabel, QDialog, QTextEdit,
+                               QToolBar, QScrollArea)
+from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, Signal, QUrl
+from PySide6.QtGui import QFont, QAction, QIcon, QPixmap, QDesktopServices
 
 
 class ButtonType(Enum):
@@ -107,6 +109,251 @@ class StyleSheet:
         """
 
 
+class AboutDialog(QDialog):
+    """关于对话框"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("关于")
+        self.setFixedSize(400, 300)
+        self.setModal(True)
+        self.setup_ui()
+
+    def setup_ui(self):
+        layout = QVBoxLayout(self)
+        layout.setSpacing(20)
+        layout.setContentsMargins(30, 30, 30, 30)
+
+        # 应用标题
+        title_label = QLabel("小李飞刀计算器")
+        title_label.setAlignment(Qt.AlignCenter)
+        title_label.setStyleSheet("""
+            QLabel {
+                font-size: 20px;
+                font-weight: bold;
+                color: #0078d4;
+                margin-bottom: 10px;
+            }
+        """)
+
+        # 版本信息
+        version_label = QLabel("版本: 1.0.0")
+        version_label.setAlignment(Qt.AlignCenter)
+        version_label.setStyleSheet("font-size: 14px; color: #666666;")
+
+        # 作者信息
+        author_label = QLabel("作者: 王东杰")
+        author_label.setAlignment(Qt.AlignCenter)
+        author_label.setStyleSheet("font-size: 14px; color: #333333; margin-top: 20px;")
+
+        # 联系方式
+        contact_label = QLabel("联系方式: wangdongjie0101@163.com")
+        contact_label.setAlignment(Qt.AlignCenter)
+        contact_label.setStyleSheet("font-size: 12px; color: #666666;")
+
+        # 描述
+        desc_label = QLabel("基于PySide6开发的现代化计算器应用")
+        desc_label.setAlignment(Qt.AlignCenter)
+        desc_label.setWordWrap(True)
+        desc_label.setStyleSheet("font-size: 12px; color: #888888; margin-top: 20px;")
+
+        # 关闭按钮
+        close_btn = QPushButton("确定")
+        close_btn.setFixedSize(80, 30)
+        close_btn.clicked.connect(self.accept)
+        close_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #0078d4;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 12px;
+            }
+            QPushButton:hover {
+                background-color: #1a88e4;
+            }
+        """)
+
+        # 布局
+        layout.addWidget(title_label)
+        layout.addWidget(version_label)
+        layout.addWidget(author_label)
+        layout.addWidget(contact_label)
+        layout.addWidget(desc_label)
+        layout.addStretch()
+
+        btn_layout = QHBoxLayout()
+        btn_layout.addStretch()
+        btn_layout.addWidget(close_btn)
+        btn_layout.addStretch()
+        layout.addLayout(btn_layout)
+
+
+def resource_path(relative_path):
+    """获取资源文件的绝对路径，兼容打包后的情况"""
+    try:
+        # PyInstaller 创建临时文件夹，并将路径存储在 _MEIPASS 中
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+
+class DonateDialog(QDialog):
+    """捐助对话框"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("支持作者")
+        self.setFixedSize(500, 600)
+        self.setModal(True)
+        self.setup_ui()
+
+    def setup_ui(self):
+        layout = QVBoxLayout(self)
+        layout.setSpacing(15)
+        layout.setContentsMargins(20, 20, 20, 20)
+
+        # 标题
+        title_label = QLabel("感谢您的支持！")
+        title_label.setAlignment(Qt.AlignCenter)
+        title_label.setStyleSheet("""
+            QLabel {
+                font-size: 18px;
+                font-weight: bold;
+                color: #0078d4;
+                margin-bottom: 10px;
+            }
+        """)
+
+        # 说明文字
+        desc_label = QLabel("如果这个应用对您有帮助，欢迎通过以下方式支持作者继续开发：")
+        desc_label.setAlignment(Qt.AlignCenter)
+        desc_label.setWordWrap(True)
+        desc_label.setStyleSheet("font-size: 12px; color: #666666; margin-bottom: 20px;")
+
+        # 滚动区域
+        scroll_area = QScrollArea()
+        scroll_widget = QWidget()
+        scroll_layout = QVBoxLayout(scroll_widget)
+
+        # 微信支付二维码
+        wechat_label = QLabel("微信支付")
+        wechat_label.setAlignment(Qt.AlignCenter)
+        wechat_label.setStyleSheet("font-size: 14px; font-weight: bold; margin: 10px 0;")
+
+        wechat_qr = QLabel()
+        wechat_qr.setAlignment(Qt.AlignCenter)
+        wechat_qr.setFixedSize(200, 200)
+
+        # 加载微信二维码图片 - 使用 resource_path 函数
+        wechat_pixmap = QPixmap(resource_path("WeChat.jpg"))
+        if not wechat_pixmap.isNull():
+            # 缩放图片以适应标签大小
+            scaled_pixmap = wechat_pixmap.scaled(200, 200, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            wechat_qr.setPixmap(scaled_pixmap)
+        else:
+            wechat_qr.setText("微信支付二维码")
+            wechat_qr.setStyleSheet("""
+                QLabel {
+                    border: 2px solid #ddd;
+                    border-radius: 10px;
+                    background-color: #f9f9f9;
+                    color: #999;
+                }
+            """)
+
+        # 支付宝二维码
+        alipay_label = QLabel("支付宝")
+        alipay_label.setAlignment(Qt.AlignCenter)
+        alipay_label.setStyleSheet("font-size: 14px; font-weight: bold; margin: 10px 0;")
+
+        alipay_qr = QLabel()
+        alipay_qr.setAlignment(Qt.AlignCenter)
+        alipay_qr.setFixedSize(200, 200)
+
+        # 加载支付宝二维码图片 - 使用 resource_path 函数
+        alipay_pixmap = QPixmap(resource_path("AliPay.png"))
+        if not alipay_pixmap.isNull():
+            # 缩放图片以适应标签大小
+            scaled_pixmap = alipay_pixmap.scaled(200, 200, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            alipay_qr.setPixmap(scaled_pixmap)
+        else:
+            alipay_qr.setText("支付宝二维码")
+            alipay_qr.setStyleSheet("""
+                QLabel {
+                    border: 2px solid #ddd;
+                    border-radius: 10px;
+                    background-color: #f9f9f9;
+                    color: #999;
+                }
+            """)
+
+        # 添加到滚动布局
+        scroll_layout.addWidget(wechat_label, alignment=Qt.AlignCenter)
+        scroll_layout.addWidget(wechat_qr, alignment=Qt.AlignCenter)
+        scroll_layout.addWidget(alipay_label, alignment=Qt.AlignCenter)
+        scroll_layout.addWidget(alipay_qr, alignment=Qt.AlignCenter)
+
+        scroll_area.setWidget(scroll_widget)
+        scroll_area.setWidgetResizable(True)
+
+        # 在线捐助链接
+        link_label = QLabel("或者访问在线捐助页面:")
+        link_label.setAlignment(Qt.AlignCenter)
+        link_label.setStyleSheet("font-size: 12px; color: #666666; margin-top: 10px;")
+
+        donate_link_btn = QPushButton("打开捐助页面")
+        donate_link_btn.setFixedSize(120, 30)
+        donate_link_btn.clicked.connect(self.open_donate_link)
+        donate_link_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #ff6b00;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 12px;
+            }
+            QPushButton:hover {
+                background-color: #ff7b20;
+            }
+        """)
+
+        # 关闭按钮
+        close_btn = QPushButton("关闭")
+        close_btn.setFixedSize(80, 30)
+        close_btn.clicked.connect(self.accept)
+        close_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #666666;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 12px;
+            }
+            QPushButton:hover {
+                background-color: #777777;
+            }
+        """)
+
+        # 布局
+        layout.addWidget(title_label)
+        layout.addWidget(desc_label)
+        layout.addWidget(scroll_area)
+        layout.addWidget(link_label)
+
+        btn_layout = QHBoxLayout()
+        btn_layout.addStretch()
+        btn_layout.addWidget(donate_link_btn)
+        btn_layout.addWidget(close_btn)
+        btn_layout.addStretch()
+        layout.addLayout(btn_layout)
+
+    def open_donate_link(self):
+        """打开捐助链接"""
+        QDesktopServices.openUrl(QUrl("https://buymeacoffee.com/WangJackdon"))
+
+
 class CalculatorButton(QPushButton):
     """可复用的计算器按钮组件"""
 
@@ -171,10 +418,11 @@ class CalculatorButton(QPushButton):
         )
         self.setStyleSheet(style)
 
+
 class DisplayWidget(QWidget):
     def __init__(self):
         super().__init__()
-        self.setup_ui()  # 添加这行来初始化界面
+        self.setup_ui()
 
     def setup_ui(self):
         layout = QVBoxLayout(self)
@@ -279,40 +527,23 @@ class MenuManager:
 
     def __init__(self, parent):
         self.parent = parent
-        self.menubar = parent.menuBar()
-        self.is_always_on_top = False
-        self.setup_menus()
+        # 注释掉菜单栏相关代码，不创建菜单
+        # self.menubar = parent.menuBar()
+        # self.setup_menus()
 
     def setup_menus(self):
-        """设置菜单"""
-        # 视图菜单
-        view_menu = self.menubar.addMenu("视图(&V)")
+        """设置菜单 - 已禁用"""
+        pass  # 不再创建菜单
 
-        # 置顶功能
-        self.always_on_top_action = QAction("置顶显示(&T)", self.parent)
-        self.always_on_top_action.setCheckable(True)
-        self.always_on_top_action.triggered.connect(self.toggle_always_on_top)
-        view_menu.addAction(self.always_on_top_action)
+    def show_about(self):
+        """显示关于对话框"""
+        dialog = AboutDialog(self.parent)
+        dialog.exec()
 
-        # 可以easily添加更多菜单项
-        view_menu.addSeparator()
-
-        # 主题菜单（示例扩展）
-        theme_menu = view_menu.addMenu("主题(&H)")
-
-        light_theme = QAction("浅色主题", self.parent)
-        dark_theme = QAction("深色主题", self.parent)
-        theme_menu.addAction(light_theme)
-        theme_menu.addAction(dark_theme)
-
-    def toggle_always_on_top(self):
-        """切换置顶显示"""
-        self.is_always_on_top = not self.is_always_on_top
-        if self.is_always_on_top:
-            self.parent.setWindowFlags(self.parent.windowFlags() | Qt.WindowStaysOnTopHint)
-        else:
-            self.parent.setWindowFlags(self.parent.windowFlags() & ~Qt.WindowStaysOnTopHint)
-        self.parent.show()
+    def show_donate(self):
+        """显示捐助对话框"""
+        dialog = DonateDialog(self.parent)
+        dialog.exec()
 
 
 class CalculatorLogic:
@@ -423,15 +654,24 @@ class CalculatorLogic:
 class Calculator(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("模块化精美计算器")
-        self.setFixedSize(380, 550)
+        self.setWindowTitle("小李飞刀计算器")
+        self.setFixedSize(380, 580)
+
+        # 明确设置窗口标志，确保有完整的窗口控制按钮
+        self.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
+
         self.setStyleSheet(StyleSheet.get_window_style())
+
+        # 隐藏菜单栏
+        self.menuBar().hide()
 
         # 初始化组件
         self.logic = CalculatorLogic()
         self.menu_manager = MenuManager(self)
+        self.is_always_on_top = False
 
         self.init_ui()
+        self.setup_toolbar()
         self.connect_signals()
 
     def init_ui(self):
@@ -455,6 +695,56 @@ class Calculator(QMainWindow):
 
         layout.addWidget(self.display_widget)
         layout.addWidget(self.button_grid)
+
+    def setup_toolbar(self):
+        """设置工具栏"""
+        toolbar = QToolBar("主工具栏")
+        toolbar.setMovable(False)
+        self.addToolBar(toolbar)
+
+        # 置顶按钮
+        self.pin_action = QAction("📌 置顶", self)
+        self.pin_action.setCheckable(True)
+        self.pin_action.setToolTip("点击保持窗口始终在最前")
+        self.pin_action.triggered.connect(self.toggle_always_on_top)
+        toolbar.addAction(self.pin_action)
+
+        toolbar.addSeparator()
+
+        # 关于按钮
+        about_action = QAction("ℹ️ 关于", self)
+        about_action.setToolTip("关于本应用")
+        about_action.triggered.connect(self.menu_manager.show_about)
+        toolbar.addAction(about_action)
+
+        # 捐助按钮
+        donate_action = QAction("❤️ 支持", self)
+        donate_action.setToolTip("支持作者")
+        donate_action.triggered.connect(self.menu_manager.show_donate)
+        toolbar.addAction(donate_action)
+
+    def toggle_always_on_top(self):
+        """切换置顶显示"""
+        self.is_always_on_top = not self.is_always_on_top
+
+        # 获取当前基本窗口标志
+        base_flags = Qt.Window | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
+
+        if self.is_always_on_top:
+            # 添加置顶标志
+            new_flags = base_flags | Qt.WindowStaysOnTopHint
+            self.pin_action.setText("📌 取消置顶")
+            self.pin_action.setToolTip("点击取消窗口置顶")
+        else:
+            # 只使用基本标志
+            new_flags = base_flags
+            self.pin_action.setText("📌 置顶")
+            self.pin_action.setToolTip("点击保持窗口始终在最前")
+
+        self.setWindowFlags(new_flags)
+        self.show()
+        self.activateWindow()
+        self.raise_()
 
     def connect_signals(self):
         """连接信号和槽"""
@@ -485,7 +775,7 @@ class Calculator(QMainWindow):
         result = self.logic.calculate(self.display_widget.get_main_text())
         if result:
             if result == "ERROR_DIVISION_BY_ZERO":
-                self.display_widget.set_main_text("错误：除零")
+                self.display_widget.set_main_text("除零错误")
                 self.logic.reset()
             elif result == "ERROR":
                 self.display_widget.set_main_text("错误")
@@ -523,8 +813,8 @@ class Calculator(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    app.setApplicationName("模块化精美计算器")
-    app.setOrganizationName("Python学习")
+    app.setApplicationName("小李飞刀计算器")
+    app.setOrganizationName("王东杰")
 
     calculator = Calculator()
     calculator.show()
