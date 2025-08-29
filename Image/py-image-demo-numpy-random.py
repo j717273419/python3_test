@@ -209,7 +209,7 @@ def create_gradient_fast(w, h, colors):
 
 # 批量生成
 w, h = 1920, 1080
-output_dir = "background" + str(random.randint(1000,99999))
+output_dir = "output\background" + str(random.randint(1000,99999))
 os.makedirs(output_dir, exist_ok=True)
 
 # for i in range(30):
