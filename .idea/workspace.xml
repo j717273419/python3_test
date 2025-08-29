@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="036d79b3-5913-4f9e-b39c-db8d9b3d846d" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/Image/py-image-demo-numpy-bubble-curves.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image/py-image-demo-numpy-bubble.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image/py-image-demo-numpy-bubble2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image/py-image-demo-numpy-curves-func.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image/py-image-demo-numpy-curves.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image/py-image-demo-numpy-random.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image/py-image-noise.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image/py-image-noise2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image/random_images/py-image-demo-numpy-curves2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/System/pynput-demo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/PySide/pyside-calc3.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/PySide/pyside-calc3.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +31,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -39,8 +51,17 @@
     "Python.BaiduResult.executor": "Run",
     "Python.css_parser.executor": "Run",
     "Python.py-image-demo-new.executor": "Run",
+    "Python.py-image-demo-numpy-bubble-curves.executor": "Run",
+    "Python.py-image-demo-numpy-bubble.executor": "Run",
+    "Python.py-image-demo-numpy-bubble2.executor": "Run",
+    "Python.py-image-demo-numpy-curves-func.executor": "Run",
+    "Python.py-image-demo-numpy-curves2.executor": "Run",
+    "Python.py-image-demo-numpy-random.executor": "Run",
     "Python.py-image-demo-numpy.executor": "Run",
+    "Python.py-image-noise.executor": "Run",
+    "Python.py-image-noise2.executor": "Run",
     "Python.py-image.executor": "Run",
+    "Python.pynput-demo.executor": "Run",
     "Python.pyside-calc.executor": "Run",
     "Python.pyside-calc2.executor": "Run",
     "Python.pyside-calc3.executor": "Run",
@@ -50,9 +71,17 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true"
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Work/Src/PY/Demo/python3_test/Image",
+    "settings.editor.selected.configurable": "preferences.customizations"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Work\Src\PY\Demo\python3_test\Image" />
+      <recent name="D:\Work\Src\PY\Demo\python3_test\Image\random_images" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -87,6 +116,11 @@
           <url>file://$PROJECT_DIR$/UI/PySide/pyside-calc3.py</url>
           <line>19</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Image/random_images/py-image-demo-numpy-curves2.py</url>
+          <line>58</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
