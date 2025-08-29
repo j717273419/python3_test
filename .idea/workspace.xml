@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="036d79b3-5913-4f9e-b39c-db8d9b3d846d" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Image/py-image-numpy-bubble-curve-random-bg.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Image/py-image-random-bg-fast.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Image/py-image-random-bg.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image/py-image-bg-fast.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Image/py-image-demo-numpy-random.py" beforeDir="false" afterPath="$PROJECT_DIR$/Image/py-image-demo-numpy-random.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Image/py-image-random-bg-fast.py" beforeDir="false" afterPath="$PROJECT_DIR$/Image/py-image-random-bg-fast.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +42,7 @@
   "keyToString": {
     "Python.BaiduResult.executor": "Run",
     "Python.css_parser.executor": "Run",
+    "Python.py-image-bg-fast.executor": "Run",
     "Python.py-image-demo-new.executor": "Run",
     "Python.py-image-demo-numpy-bubble-curves.executor": "Run",
     "Python.py-image-demo-numpy-bubble.executor": "Run",
@@ -55,6 +54,7 @@
     "Python.py-image-noise.executor": "Run",
     "Python.py-image-noise2.executor": "Run",
     "Python.py-image-numpy-bubble-curve-random-bg.executor": "Run",
+    "Python.py-image-random-bg-fast.executor": "Run",
     "Python.py-image.executor": "Run",
     "Python.pynput-demo.executor": "Run",
     "Python.pyside-calc.executor": "Run",

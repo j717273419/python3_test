@@ -505,6 +505,248 @@ def benchmark_performance():
         print(f"  吞吐量: {len(files)/total_time:.2f} 张/秒")
 
 
+def create_random_background(width: int = 1920, height: int = 1080, save: bool = False,
+                             save_path: str = "random_background.png") -> Image.Image:
+    """
+    创建随机背景图片，优化版本
+
+    参数:
+        width: 图片宽度
+        height: 图片高度
+        save: 是否保存图片，默认False
+        save_path: 保存路径，默认为"random_background.png"
+
+    返回:
+        PIL.Image.Image: 生成的图片对象
+    """
+    # 创建配置，降低元素密度和增加模糊
+    config = ImageConfig(
+        width=width,
+        height=height,
+        noise_intensity=random.uniform(0.01, 0.02),  # 适度降低噪点
+        blur_radius=random.uniform(0.8, 2.0),  # 增加模糊效果
+        element_density=random.uniform(0.8, 1.2)  # 降低元素密度
+    )
+
+    # 确保使用所有效果但密度适中
+    config.effects = ['gradient', 'bubbles', 'curves', 'particles']
+
+    # 生成图像
+    generator = FastImageGenerator(config)
+    img = generator.generate_image_fast()
+
+    # 转为RGBA以便添加半透明元素
+    img = img.convert('RGBA')
+    draw = ImageDraw.Draw(img)
+
+    # 定义中心安全区域 - 将避免在这里放置明显元素
+    center_margin_x = width // 4
+    center_margin_y = height // 4
+    center_box = (
+        width // 2 - center_margin_x,
+        height // 2 - center_margin_y,
+        width // 2 + center_margin_x,
+        height // 2 + center_margin_y
+    )
+
+    # 将图像划分为4×4网格，确保元素分布均匀
+    grid_w, grid_h = 4, 4
+    cell_w, cell_h = width // grid_w, height // grid_h
+
+    # 1. 添加分散的半透明几何形状(数量减少20%)
+    shape_count = random.randint(2, 6)  # 减少形状数量
+
+    # 在每个网格单元中放置不超过1个形状
+    used_cells = set()
+
+    for _ in range(shape_count):
+        # 随机选择一个未使用的网格单元
+        available_cells = [(x, y) for x in range(grid_w) for y in range(grid_h)
+                           if (x, y) not in used_cells]
+        if not available_cells:
+            break
+
+        cell_x, cell_y = random.choice(available_cells)
+        used_cells.add((cell_x, cell_y))
+
+        # 计算此单元格内的随机位置
+        base_x = cell_x * cell_w + random.randint(10, cell_w - 10)
+        base_y = cell_y * cell_h + random.randint(10, cell_h - 10)
+
+        # 检查是否在中心安全区域
+        is_in_center = (
+                center_box[0] <= base_x <= center_box[2] and
+                center_box[1] <= base_y <= center_box[3]
+        )
+
+        # 形状类型和颜色
+        shape_type = random.choice(['rect', 'circle', 'polygon'])
+
+        # 如果在中心区域，使用更高透明度
+        alpha = random.randint(5, 15) if is_in_center else random.randint(15, 30)
+
+        # 降低颜色饱和度 - 使用更柔和的颜色
+        r = random.randint(180, 240)
+        g = random.randint(180, 240)
+        b = random.randint(180, 240)
+        color = (r, g, b, alpha)
+
+        if shape_type == 'rect':
+            size = random.randint(20, 100)
+            x1 = base_x
+            y1 = base_y
+            x2 = x1 + size
+            y2 = y1 + size
+            draw.rectangle([x1, y1, x2, y2], fill=color)
+
+        elif shape_type == 'circle':
+            radius = random.randint(20, 80)
+            draw.ellipse([base_x - radius, base_y - radius,
+                          base_x + radius, base_y + radius], fill=color)
+
+        else:  # polygon
+            points = []
+            sides = random.randint(3, 5)
+            radius = random.randint(20, 60)
+            for i in range(sides):
+                angle = 2 * math.pi * i / sides
+                px = base_x + radius * math.cos(angle)
+                py = base_y + radius * math.sin(angle)
+                points.append((px, py))
+            draw.polygon(points, fill=color)
+
+    # 2. 添加随机线条 (减少数量，增加透明度)
+    line_count = random.randint(4, 10)  # 减少线条数量
+
+    for _ in range(line_count):
+        # 均匀分布线条
+        start_grid_x, start_grid_y = random.randint(0, grid_w - 1), random.randint(0, grid_h - 1)
+        end_grid_x, end_grid_y = random.randint(0, grid_w - 1), random.randint(0, grid_h - 1)
+
+        x1 = start_grid_x * cell_w + random.randint(10, cell_w - 10)
+        y1 = start_grid_y * cell_h + random.randint(10, cell_h - 10)
+        x2 = end_grid_x * cell_w + random.randint(10, cell_w - 10)
+        y2 = end_grid_y * cell_h + random.randint(10, cell_h - 10)
+
+        # 如果线条穿过中心区域，降低其可见度
+        crosses_center = (
+                (x1 <= center_box[2] and x2 >= center_box[0]) and
+                (y1 <= center_box[3] and y2 >= center_box[1])
+        )
+
+        line_width = random.randint(1, 3)  # 减小线宽
+        alpha = random.randint(10, 25) if crosses_center else random.randint(20, 40)
+
+        # 使用柔和颜色
+        r = random.randint(160, 220)
+        g = random.randint(160, 220)
+        b = random.randint(160, 220)
+        color = (r, g, b, alpha)
+
+        draw.line([x1, y1, x2, y2], fill=color, width=line_width)
+
+    # 对整个图像应用轻微模糊，使元素更加柔和
+    img = img.filter(ImageFilter.GaussianBlur(radius=0.8))
+
+    # 如果需要保存
+    if save:
+        # 确保目录存在
+        save_dir = os.path.dirname(save_path)
+        if save_dir and not os.path.exists(save_dir):
+            os.makedirs(save_dir, exist_ok=True)
+
+        # 保存图像
+        img.save(save_path)
+        print(f"图片已保存至: {save_path}")
+
+    return img.convert('RGB')  # 返回RGB模式的图像
+
+# 这个版本，生成的元素太密，并且颜色太重，影响后期添加的标题
+# def create_random_background(width: int = 1920, height: int = 1080, save: bool = False,
+#                             save_path: str = "random_background.png") -> Image.Image:
+#     """
+#     创建随机背景图片，增强版
+#
+#     参数:
+#         width: 图片宽度
+#         height: 图片高度
+#         save: 是否保存图片，默认False
+#         save_path: 保存路径，默认为"random_background.png"
+#
+#     返回:
+#         PIL.Image.Image: 生成的图片对象
+#     """
+#     # 创建丰富的配置
+#     config = ImageConfig(
+#         width=width,
+#         height=height,
+#         noise_intensity=random.uniform(0.01, 0.03),  # 增加噪点
+#         blur_radius=random.uniform(0.5, 1.5),       # 更多模糊变化
+#         element_density=random.uniform(1.2, 2.0)    # 增加元素密度
+#     )
+#
+#     # 随机选择效果组合，确保使用所有效果
+#     config.effects = ['gradient', 'bubbles', 'curves', 'particles']
+#
+#     # 随机选择曲线类型
+#     config.curve_types = random.sample([
+#         'bezier', 'sine', 'spiral', 'lissajous', 'rose'
+#     ], random.randint(3, 5))
+#
+#     # 生成图像
+#     generator = FastImageGenerator(config)
+#     img = generator.generate_image_fast()
+#
+#     # 添加额外的图形元素增强层次感
+#     draw = ImageDraw.Draw(img)
+#
+#     # 1. 添加半透明几何形状
+#     for _ in range(random.randint(3, 8)):
+#         shape_type = random.choice(['rect', 'circle', 'polygon'])
+#         color = tuple(list(random.randint(0, 255) for _ in range(3)) + [random.randint(10, 40)])
+#
+#         if shape_type == 'rect':
+#             x1 = random.randint(0, width)
+#             y1 = random.randint(0, height)
+#             x2 = random.randint(x1, min(x1 + width//2, width))
+#             y2 = random.randint(y1, min(y1 + height//2, height))
+#             draw.rectangle([x1, y1, x2, y2], fill=color)
+#
+#         elif shape_type == 'circle':
+#             x = random.randint(0, width)
+#             y = random.randint(0, height)
+#             radius = random.randint(30, 150)
+#             draw.ellipse([x-radius, y-radius, x+radius, y+radius], fill=color)
+#
+#         else:  # polygon
+#             points = []
+#             for _ in range(random.randint(3, 6)):
+#                 points.append((random.randint(0, width), random.randint(0, height)))
+#             draw.polygon(points, fill=color)
+#
+#     # 2. 添加随机渐变线条
+#     for _ in range(random.randint(5, 15)):
+#         line_width = random.randint(1, 5)
+#         x1 = random.randint(0, width)
+#         y1 = random.randint(0, height)
+#         x2 = random.randint(0, width)
+#         y2 = random.randint(0, height)
+#         color = tuple(random.randint(100, 255) for _ in range(3)) + (random.randint(20, 60),)
+#         draw.line([x1, y1, x2, y2], fill=color, width=line_width)
+#
+#     # 如果需要保存
+#     if save:
+#         # 确保目录存在
+#         save_dir = os.path.dirname(save_path)
+#         if save_dir and not os.path.exists(save_dir):
+#             os.makedirs(save_dir, exist_ok=True)
+#
+#         # 保存图像
+#         img.save(save_path)
+#         print(f"图片已保存至: {save_path}")
+#
+#     return img
+
 if __name__ == "__main__":
     import sys
 
@@ -513,22 +755,31 @@ if __name__ == "__main__":
     else:
         # 正常生成
         print("🚀 快速随机背景图片生成器")
-        print("=" * 50)
-        print("⚡ 性能优化特性:")
-        print("✓ 多进程并行生成")
-        print("✓ 向量化渐变计算")
-        print("✓ 颜色池缓存")
-        print("✓ 减少元素密度")
-        print("✓ 优化图像保存")
-        print("✓ 内存使用优化")
-        print("-" * 50)
+        # print("=" * 50)
+        # print("⚡ 性能优化特性:")
+        # print("✓ 多进程并行生成")
+        # print("✓ 向量化渐变计算")
+        # print("✓ 颜色池缓存")
+        # print("✓ 减少元素密度")
+        # print("✓ 优化图像保存")
+        # print("✓ 内存使用优化")
+        # print("-" * 50)
+        #
+        # # 异步生成20张图片
+        # loop = asyncio.new_event_loop()
+        # asyncio.set_event_loop(loop)
+        # files = loop.run_until_complete(generate_images_async(100))
+        # loop.close()
+        #
+        # print(f"\n📂 生成完成！共 {len(files)} 张图片")
+        # if files:
+        #     print(f"📁 示例文件: {files[0]}")
 
-        # 异步生成20张图片
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        files = loop.run_until_complete(generate_images_async(100))
-        loop.close()
+        # # 不保存，仅获取图片对象
+        # img = create_random_background(1280, 720)
+        #
+        # # 生成并保存图片
+        # img = create_random_background(1920, 1080, save=True, save_path="output/backgrounds/my_bg.png")
 
-        print(f"\n📂 生成完成！共 {len(files)} 张图片")
-        if files:
-            print(f"📁 示例文件: {files[0]}")
+        img = create_random_background(1920, 1080)
+        img.show()
