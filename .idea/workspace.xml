@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="036d79b3-5913-4f9e-b39c-db8d9b3d846d" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Image/py-image-bg-fast.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI/DearPyGUI/DearPyGUI-01-HelloWorld.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Image/py-image-random-bg-fast.py" beforeDir="false" afterPath="$PROJECT_DIR$/Image/py-image-random-bg-fast.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +40,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.BaiduResult.executor": "Run",
+    "Python.DearPyGUI-01-HelloWorld.executor": "Run",
     "Python.css_parser.executor": "Run",
     "Python.py-image-bg-fast.executor": "Run",
     "Python.py-image-demo-new.executor": "Run",
@@ -80,7 +80,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-7e47963ff851-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.515" />
+        <option value="bundled-python-sdk-ce6832f46686-7b97d883f26b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.25557.178" />
       </set>
     </attachedChunks>
   </component>
